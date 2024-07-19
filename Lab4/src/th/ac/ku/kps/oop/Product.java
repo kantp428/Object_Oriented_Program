@@ -1,46 +1,37 @@
 package th.ac.ku.kps.oop;
 
 public class Product {
-	private String Name;
-	private String Code;
-	private double Price;
-	
-	public Product(String c, String n, double p) {
-		Code = c;
-		Name = n;
-		Price = p;
+	private int code;
+	public int getCode() {
+		return code;
+	}
+	public void setCode(int code) {
+		this.code = code;
 	}
 	
-	public Product(String c) {
-		Code = c;
-	}
-	//Setter
-	public void setCode(String code) {
-		Code = code;
-	}
-	
-	public void setName(String name) {
-		Name = name;
-	}
-	
-	public void setPrice(double price) {
-		Price = price;
-	}
-	//Getter
-	public String getCode() {
-		return Code;
-	}
-	
+	private String name;
 	public String getName() {
-		return Name;
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
 	}
 	
+	private double price;
 	public double getPrice() {
-		return Price;
+		return price;
 	}
-	//method
-	public void showProduct() {
-		System.out.println("Product code " + Code);
-		System.out.println("Name:" + Name + " , Price: " + Price);
+	public void setPrice(double price) {
+		this.price = price;
 	}
+	
+	public Product(int c, String n, double p) {
+		code = c;
+		name = n;
+		price = p;
+	}
+	public Product(int c) {
+		code = c;
+	}
+	
 }
