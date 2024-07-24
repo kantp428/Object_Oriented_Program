@@ -4,49 +4,43 @@ public class BankAccount {
 	private String name;
 	private double amount;
 	private Date date;
+	
 	public BankAccount(String n) {
 		name = n;
 		amount = 0;
-		Date date1 = new Date (13, 7, 2567);
-		this.date = date1;
+		date = new Date(19,7,2567);
 	}
-	
 	public BankAccount(String n, double a, Date d) {
 		name = n;
 		amount = a;
 		date = d;
 	}
 	
-	public void deposit(double add) {
-		amount += add;
+	void deposit(double a) {
+		amount += a;
 	}
 	
-	public boolean withdraw(double minus) {
-		boolean status = false;
-		if(amount - minus >= 0) {
-			amount -= minus;
-			status = true;
-		}
-		return status;
-	}
-	
-	public void transfer(BankAccount other, double minus) {
-		if(amount - minus >= 0) {
-			amount -= minus;
-			other.deposit(minus);
+	boolean withdraw(double a) {
+		if(amount>=a) {
+			amount -= a;
+			return true;
+		}else {		
+			return false;
 		}
 	}
 	
-	public void property() {
-		System.out.println("Amount: " + amount);
+	void transfer(BankAccount other, double a) {
+		if(amount>=other.amount){
+			other.amount += a;
+			amount -= a;
+		}
 	}
 	
-	public String getInfo() {
-		String out = name +" "+ date.getDate() + "/" + date.getMonth() + "/" + date.getYear();
-		return out;
+	public double getAmount() {
+		return amount;
 	}
 	
-//	public void showDate() {
-//		System.out.println(date.getDate() + "/" + date.getMonth() + "/" + date.getYear());
-//	}
+	String getinfo() {
+		return name+" "+date.showAll();
+	}
 }
