@@ -17,6 +17,8 @@ public class Calculator extends JFrame{
 	JLabel numBox;
 	JLabel calBox;
 	
+	
+	//Grid Bag Constraint Part
 	public static GridBagConstraints createConstraints(int gridx, int gridy, int gridWidth, int gridHeight) {
 		GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = gridx;
@@ -42,6 +44,7 @@ public class Calculator extends JFrame{
         gbc.weighty = 1;
 		return gbc;
 	}
+	///////////////////////////////////////////////////////
 	
 	public Calculator(String title) {
 		super(title);
@@ -52,7 +55,7 @@ public class Calculator extends JFrame{
 		showPanel = new JPanel();
 		showPanel.setBackground(Color.WHITE);
 		showPanel.setLayout(new GridBagLayout());
-		showPanel.setPreferredSize(new Dimension(450, 100));
+		//showPanel.setPreferredSize(new Dimension(450, 100));
 		
 		allPanel = new JPanel();	
 		allPanel.setPreferredSize(new Dimension(450, 400));
@@ -81,7 +84,7 @@ public class Calculator extends JFrame{
 		point = new JButton(".");
 		plus = new JButton("+");
 		minus = new JButton("-");
-		times = new JButton("*");
+		times = new JButton("x");
 		devided = new JButton("/");
 		equal = new JButton("=");
 		c = new JButton("C");
@@ -151,7 +154,7 @@ public class Calculator extends JFrame{
 		public void actionPerformed(ActionEvent e) {
 			if(calErr==false) {
 				if(!number.equals(".") || input.indexOf('.')==-1) {
-					if(input.equals("0")) {
+					if(input.equals("0") && !number.equals(".")) {
 						input = number;				
 					}else {
 						input = input + number;
@@ -174,6 +177,8 @@ public class Calculator extends JFrame{
 						num1 = input;
 					}else if(input.isEmpty() && operator.isEmpty()) {
 						num1 = "0";
+					}else if(input.isEmpty() && !operator.isEmpty()) {
+						
 					}else {
 						num2 = input;
 						double n1 = Double.valueOf(num1);
@@ -206,7 +211,7 @@ public class Calculator extends JFrame{
 	private class equal implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {	
-			if(calErr==false && !input.isEmpty()) {
+			if(calErr==false && !input.isEmpty() && !operator.isEmpty()) {
 				num2 = input;
 				input = "";
 				double n1 = Double.valueOf(num1);
@@ -217,11 +222,26 @@ public class Calculator extends JFrame{
 					calBox.setText(calBox.getText() + num2 + " =");
 					numBox.setText(output+"");
 					num1 = output+"";
-					num2 = "";
+					//num2 = "";
 					input = "";
-					operator = "";
+					//operator = "";
 				}else {
 					calBox.setText("Press C button to continue");
+				}
+			}else if(calErr==false && input.isEmpty()) {
+				if(!operator.isEmpty()) {
+					double n1 = Double.valueOf(num1);
+					double n2 = Double.valueOf(num2);
+					double output = operation(n1, n2, operator);
+					
+					if(!(operator.equals("/") && n2==0)) {
+						calBox.setText(num1 +" "+ operator +" "+ num2 + " =");
+						numBox.setText(output+"");
+						num1 = output+"";
+						input = "";
+					}else {
+						calBox.setText("Press C button to continue");
+					}
 				}
 			}
 		
@@ -247,8 +267,15 @@ public class Calculator extends JFrame{
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			input="0";
-			numBox.setText("0");;
+			if(calErr==false) {
+				if(input.isEmpty()) {
+					num1="0";
+					numBox.setText("0");
+				}else {
+					input="0";
+					numBox.setText("0");						
+				}
+			}
 		}
 	}
 	
@@ -259,7 +286,7 @@ public class Calculator extends JFrame{
 			output = n1 + n2;
 		}else if(operator=="-") {
 			output = n1 - n2;
-		}else if(operator=="*") {
+		}else if(operator=="x") {
 			output = n1 * n2;
 		}else if(operator=="/") {
 			if(n2 == 0) {
