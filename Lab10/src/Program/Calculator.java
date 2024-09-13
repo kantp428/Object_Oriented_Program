@@ -153,14 +153,29 @@ public class Calculator extends JFrame{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if(calErr==false) {
-				if(!number.equals(".") || input.indexOf('.')==-1) {
-					if(input.equals("0") && !number.equals(".")) {
-						input = number;				
-					}else {
-						input = input + number;
+				if(num2.isEmpty()) {
+					if(!number.equals(".") || input.indexOf('.')==-1) {
+						if(input.equals("0") && !number.equals(".")) {
+							input = number;				
+						}else {
+							input = input + number;
+						}
+						numBox.setText(input);
+					}								
+				}else if(!num2.isEmpty() && !operator.isEmpty()){
+					num2 = "";
+					operator = "";
+					calBox.setText("");
+					numBox.setText("0");
+					if(!number.equals(".") || input.indexOf('.')==-1) {
+						if(input.equals("0") && !number.equals(".")) {
+							input = number;				
+						}else {
+							input = input + number;
+						}
+						numBox.setText(input);
 					}
-					numBox.setText(input);
-				}			
+				}
 			}
 		}
 	}
@@ -228,7 +243,7 @@ public class Calculator extends JFrame{
 				}else {
 					calBox.setText("Press C button to continue");
 				}
-			}else if(calErr==false && input.isEmpty()) {
+			}else if(calErr==false && input.isEmpty() && !num2.isEmpty()) {
 				if(!operator.isEmpty()) {
 					double n1 = Double.valueOf(num1);
 					double n2 = Double.valueOf(num2);
